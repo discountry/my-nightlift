@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+    body,
+    html {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+    
+    #allmap {
+        margin: 0 auto;
+        width: 80%;
+        height: 80%;
+    }
+    
+    .map {
+        width: 50%;
+    }
+    
+    .form {
+        color: #FFF;
+        margin-bottom: 2rem;
+    }
+    
+    body {
+        text-align: center;
+        background-color: #673ab7;
+    }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=120f43a47cb0c72a0cc9c35d0e8d99e0"></script>
+    <title>根据中心点关键字周边搜索</title>
+</head>
+
+<body>
+    <div class="form">
+        <h1>NightLife Searcher</h1>
+        <label for="position">Search</label>
+        <input id="position" name="position" placeholder="Where are you..." type="text" />
+    </div>
+    <div id="allmap"></div>
+</body>
+
+</html>
+<script type="text/javascript">
+var map = new BMap.Map("allmap"); // 创建Map实例
+map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+var local = new BMap.LocalSearch(map, {
+    renderOptions: {
+        map: map,
+        autoViewport: true
+    }
+});
+local.searchNearby("酒吧", "前门");
+
+$('#position').keydown(function() {
+    if (event.keyCode == "13") { //keyCode=13是回车键
+        local.searchNearby("酒吧", $('#position').val());
+    }
+});
+</script>
